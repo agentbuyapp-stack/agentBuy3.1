@@ -11,7 +11,7 @@ async function start() {
   console.log("MongoDB connected");
 
   app.listen(PORT, () => {
-    console.log(`Backend running on http://localhost:${PORT}`);
+    console.log(`Backend running on http://localhost:${PORT}/health`);
   });
 }
 
