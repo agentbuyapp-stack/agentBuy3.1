@@ -1,9 +1,10 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Model } from "mongoose";
 
 export type Role = "user" | "agent" | "admin";
 
 export interface IUser extends Document {
   email: string;
+  clerkUserId: string;
   role: Role;
   isApproved: boolean;
   approvedAt?: Date;
@@ -15,34 +16,29 @@ export interface IUser extends Document {
 
 const userSchema = new Schema<IUser>(
   {
-    email: {
+    clerkUserId: {
       type: String,
       required: true,
       unique: true,
-      lowercase: true,
+      index: true,
       trim: true,
     },
-    role: {
+    email: {
       type: String,
-      enum: ["user", "agent", "admin"],
-      default: "user",
+      required: true,
+      lowercase: true,
+      trim: true,
+      index: true,
     },
-    isApproved: {
-      type: Boolean,
-      default: false,
-    },
-    approvedBy: {
-      type: String,
-    },
-    agentReward: {
-      type: Number,
-      default: 0,
-      min: 0,
-    },
+    role: { type: String, enum: ["user", "agent", "admin"], default: "user" },
+    isApproved: { type: Boolean, default: false },
+    approvedAt: { type: Date },
+    approvedBy: { type: String },
+    agentReward: { type: Number, default: 0, min: 0 },
   },
-  {
-    timestamps: true,
-    collection: "users",
-  }
+  { timestamps: true, collection: "users" }
 );
-export const userModel = mongoose.model<IUser>("user", userSchema);
+
+export const userModel: Model<IUser> =
+  (mongoose.models.User as Model<IUser>) ||
+  mongoose.model<IUser>("User", userSchema);
