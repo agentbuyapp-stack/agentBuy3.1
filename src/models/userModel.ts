@@ -4,9 +4,9 @@ export type Role = "user" | "agent" | "admin";
 
 export interface IUser extends Document {
   email: string;
-  clerkUserId: string;
+  clerkId: string;
   role: Role;
-  isApproved: boolean;
+  isApproved?: boolean;
   approvedAt?: Date;
   approvedBy?: string;
   agentReward?: number;
@@ -16,7 +16,7 @@ export interface IUser extends Document {
 
 const userSchema = new Schema<IUser>(
   {
-    clerkUserId: {
+    clerkId: {
       type: String,
       required: true,
       unique: true,

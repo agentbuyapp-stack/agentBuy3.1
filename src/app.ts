@@ -1,19 +1,16 @@
 import express from "express";
 import cors from "cors";
-import userRoutes from "./routes/userRoutes";
 import { clerkMiddleware } from "@clerk/express";
+import userRoute from "./routes/userRoutes";
 
 const app = express();
 
 app.use(cors());
+app.use("/api/webhooks", userRoute);
 app.use(express.json());
 app.use(clerkMiddleware());
-
-app.get("/health", (_, res) => {
+app.get("/", (_, res) => {
   res.json({ status: "ok" });
 });
-
-// Routes
-app.use("/api/users", userRoutes);
 
 export default app;
