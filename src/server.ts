@@ -1,8 +1,9 @@
+import dotenv from "dotenv";
+dotenv.config();
 import app from "./app";
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-
-dotenv.config();
+import ngrok from "@ngrok/ngrok";
+// console.log(process.env.NGROK_AUTHTOKEN, "env is here");
 
 const PORT = process.env.PORT || 4000;
 
@@ -13,6 +14,10 @@ async function start() {
   app.listen(PORT, () => {
     console.log(`Backend running on http://localhost:${PORT}/health`);
   });
+  const listener = await ngrok.connect({
+    addr: PORT,
+    authtoken: process.env.NGROK_AUTHTOKEN,
+  });
+  console.log("ngrok url:", listener.url());
 }
-
 start();
