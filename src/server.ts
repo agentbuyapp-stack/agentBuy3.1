@@ -3,6 +3,7 @@ dotenv.config();
 import app from "./app";
 import mongoose from "mongoose";
 import ngrok from "@ngrok/ngrok";
+// console.log(process.env.NGROK_AUTHTOKEN, "env is here");
 
 const PORT = process.env.PORT || 4000;
 
