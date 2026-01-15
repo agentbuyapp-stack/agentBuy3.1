@@ -1,8 +1,7 @@
 import { Router } from "express";
-import express from "express";
-import { signUpUser } from "../controllers/userController";
+import { signUpFinish } from "../controllers/userController";
 
 const userRoute = Router();
 
-userRoute.post("/", express.raw({ type: "application/json" }), signUpUser);
+userRoute.post("/createProfile", signUpFinish);
 export default userRoute;
