@@ -1,29 +1,22 @@
 import { Request, Response } from "express";
 import { userModel } from "../models/userModel";
-import { profileModel } from "../models/profileModel";
-
-export const signUpFinish = async (req: Request, res: Response) => {
-  const { clerkId, name, phone, cargo, accountNumber } = req.body;
+export const setRole = async (req: Request, res: Response) => {
+  const { role, clerkId } = req.body;
   try {
-    const user = await userModel.findOne({
-      clerkId: clerkId,
-    });
-    if (!user) {
-      return res.status(400).json({ message: "user not found" });
-    }
-    if (user) {
-      await profileModel.create({
-        userId: user._id,
-        name: name,
-        phone: phone,
-        email: user.email,
-        cargo: cargo,
-        accountNumber: accountNumber,
-      });
-    }
-    res.status(200).json({ message: "profile succesfully created" });
+    const setRole = await userModel.findOneAndUpdate(
+      { clerkId },
+      {
+        $set: {
+          role,
+        },
+      },
+      {
+        new: true,
+      }
+    );
+    res.status(200).json({ message: setRole });
   } catch (err) {
-    console.error("", err);
-    res.status(400).send("failed");
+    console.error(err);
+    res.status(500).send("failed to set role");
   }
 };

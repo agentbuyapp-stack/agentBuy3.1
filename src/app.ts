@@ -1,8 +1,9 @@
 import express from "express";
 import cors from "cors";
 import { clerkMiddleware } from "@clerk/express";
-import userRoute from "./routes/userRoutes";
 import webhookRoute from "./routes/webhookRoutes";
+import profileRoute from "./routes/profileRoute";
+import userRoute from "./routes/userRoute";
 
 const app = express();
 
@@ -12,6 +13,8 @@ app.use("/api/webhooks", webhookRoute);
 
 app.use(express.json());
 // app.use(clerkMiddleware());
+// profile route
+app.use("/profile", profileRoute);
 // user route
 app.use("/user", userRoute);
 app.get("/", (_, res) => {
