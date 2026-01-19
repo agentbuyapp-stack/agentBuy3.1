@@ -36,6 +36,6 @@ const userSchema = new Schema<IUser>(
     approvedBy: { type: String },
     agentReward: { type: Number, default: 0, min: 0 },
   },
-  { timestamps: true, collection: "users" }
+  { timestamps: true, collection: "users" },
 );
 export const userModel = mongoose.model<IUser>("users", userSchema);
