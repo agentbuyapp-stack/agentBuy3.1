@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { setRole } from "../controllers/userController";
+import { getUserById, setRole } from "../controllers/userController";
 
 const userRoute = Router();
-userRoute.put("/setRole", setRole);
+userRoute.put("/setRole/:_id", setRole);
+userRoute.get("/getUserById/:_id", getUserById);
 export default userRoute;
