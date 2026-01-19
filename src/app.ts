@@ -3,14 +3,23 @@ import cors from "cors";
 import userRoutes from "./routes/userRoutes";
 import cargoRoutes from "./routes/cargoRoutes";
 import { clerkMiddleware } from "@clerk/express";
+import webhookRoute from "./routes/webhookRoutes";
+import profileRoute from "./routes/profileRoute";
+import userRoute from "./routes/userRoute";
 
 const app = express();
 
 app.use(cors());
-app.use(express.json());
-app.use(clerkMiddleware());
+// webhook route
+app.use("/api/webhooks", webhookRoute);
 
-app.get("/health", (_, res) => {
+app.use(express.json());
+// app.use(clerkMiddleware());
+// profile route
+app.use("/profile", profileRoute);
+// user route
+app.use("/user", userRoute);
+app.get("/", (_, res) => {
   res.json({ status: "ok" });
 });
 
