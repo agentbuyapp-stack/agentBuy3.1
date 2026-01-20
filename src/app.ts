@@ -19,6 +19,7 @@ app.use(express.json());
 app.use("/profile", profileRoute);
 // user route
 app.use("/user", userRoute);
+app.use("/admin");
 app.get("/", (_, res) => {
   res.json({ status: "ok" });
 });
