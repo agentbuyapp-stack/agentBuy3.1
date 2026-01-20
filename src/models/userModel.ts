@@ -44,4 +44,4 @@ const userSchema = new Schema<IUser>(
   },
   { timestamps: true, collection: "users" },
 );
-export const userModel = mongoose.model<IUser>("users", userSchema);
+export const userModel = mongoose.model<IUser>("User", userSchema);
