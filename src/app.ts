@@ -6,6 +6,8 @@ import { clerkMiddleware } from "@clerk/express";
 import webhookRoute from "./routes/webhookRoutes";
 import profileRoute from "./routes/profileRoute";
 import userRoute from "./routes/userRoute";
+import userOrderRoutes from "./routes/userOrderRoutes";
+import agentOrderRoutes from "./routes/agentOrderRoutes";
 
 const app = express();
 
@@ -26,5 +28,7 @@ app.get("/", (_, res) => {
 // Routes
 // app.use("/api/users", userRoutes);
 app.use("/api/cargo", cargoRoutes);
+app.use("/api/user-orders", userOrderRoutes);
+app.use("/api/agent-orders", agentOrderRoutes);
 
 export default app;
