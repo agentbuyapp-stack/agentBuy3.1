@@ -19,14 +19,14 @@ userRoute.get("/", getAllUsers);
 userRoute.get("/clerk/:clerkId", getUserByClerkId);
 
 // Get user by ID
-userRoute.get("/:id", getUserById);
+// userRoute.get("/:id", getUserById);
 
 // Set role
-userRoute.put("/setRole", setRole);
+// userRoute.put("/setRole", setRole);
 
-import { getUserById, setRole } from "../controllers/userController";
+// import { getUserById, setRole } from "../controllers/userController";
 
-const userRoute = Router();
+// const userRoute = Router();
 userRoute.put("/setRole/:_id", setRole);
 userRoute.get("/getUserById/:_id", getUserById);
 export default userRoute;

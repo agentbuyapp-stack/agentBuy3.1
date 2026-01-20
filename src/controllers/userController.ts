@@ -22,18 +22,18 @@ export const getAllUsers = async (req: Request, res: Response) => {
 };
 
 // Get user by ID
-export const getUserById = async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-    const user = await userModel.findById(id);
-    if (!user) {
-      return res.status(404).json({ success: false, error: "User not found" });
-    }
-    res.status(200).json({ success: true, data: user });
-  } catch (error) {
-    res.status(500).json({ success: false, error: (error as Error).message });
-  }
-};
+// export const getUserById = async (req: Request, res: Response) => {
+//   try {
+//     const { id } = req.params;
+//     const user = await userModel.findById(id);
+//     if (!user) {
+//       return res.status(404).json({ success: false, error: "User not found" });
+//     }
+//     res.status(200).json({ success: true, data: user });
+//   } catch (error) {
+//     res.status(500).json({ success: false, error: (error as Error).message });
+//   }
+// };
 
 // Get user by clerkId
 export const getUserByClerkId = async (req: Request, res: Response) => {
