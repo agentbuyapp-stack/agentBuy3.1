@@ -10,12 +10,15 @@ export const signUpUser = async (req: Request, res: Response) => {
       const exists = await userModel.findOne({
         clerkId: userData.id,
       });
+      const signupType = userData.unsafe_metadata?.signupType;
       if (!exists) {
         await userModel.create({
           clerkId: userData.id,
           email: userData.email_addresses?.[0]?.email_address,
+          role: signupType,
         });
         console.log("User created in database");
+        console.log("ROLE:", signupType);
       } else {
         console.log("User already exists in database");
       }

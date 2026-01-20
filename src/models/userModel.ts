@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export type Role = "user" | "agent" | "admin";
+export type RewardStatus = "pending" | "cancelled" | "succesfull";
 
 export interface IUser extends Document {
   email: string;
@@ -12,6 +13,7 @@ export interface IUser extends Document {
   agentReward?: number;
   createdAt: Date;
   updatedAt: Date;
+  rewardStatus?: RewardStatus;
 }
 
 const userSchema = new Schema<IUser>(
@@ -35,7 +37,11 @@ const userSchema = new Schema<IUser>(
     approvedAt: { type: Date },
     approvedBy: { type: String },
     agentReward: { type: Number, default: 0, min: 0 },
+    rewardStatus: {
+      type: String,
+      enum: ["pending", "cancelled", "succesfull"],
+    },
   },
-  { timestamps: true, collection: "users" }
+  { timestamps: true, collection: "users" },
 );
 export const userModel = mongoose.model<IUser>("User", userSchema);
