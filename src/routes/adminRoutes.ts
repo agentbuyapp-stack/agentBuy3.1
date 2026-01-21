@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { sendReward } from "../controllers/adminController";
+import { confirmOrderAndsendReward } from "../controllers/adminController";
 
 const adminRoute = Router();
-adminRoute.post("/giveReward/agent/:agentId", sendReward);
+adminRoute.post("/giveReward/agent/:agentOrderId", confirmOrderAndsendReward);
 export default adminRoute;
