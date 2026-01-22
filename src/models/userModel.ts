@@ -10,10 +10,8 @@ export interface IUser extends Document {
   isApproved?: boolean;
   approvedAt?: Date;
   approvedBy?: string;
-  agentReward?: number;
   createdAt: Date;
   updatedAt: Date;
-  rewardStatus?: RewardStatus;
 }
 
 const userSchema = new Schema<IUser>(
@@ -36,11 +34,6 @@ const userSchema = new Schema<IUser>(
     isApproved: { type: Boolean, default: false },
     approvedAt: { type: Date },
     approvedBy: { type: String },
-    agentReward: { type: Number, default: 0, min: 0 },
-    rewardStatus: {
-      type: String,
-      enum: ["pending", "cancelled", "succesfull"],
-    },
   },
   { timestamps: true, collection: "users" },
 );
