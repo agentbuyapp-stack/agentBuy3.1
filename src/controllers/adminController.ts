@@ -48,16 +48,25 @@ export const confirmOrderAndsendReward = async (
 // CLERK_SECRET_KEY=sk_test_Wa1iNOGz5qXHmXObOI6KmqK4GG49lLQXnAKPGRLZhz
 export const adminConfirmReward = async (req: Request, res: Response) => {
   const { adminId, agentId } = req.params;
+  const { reward } = req.body;
   try {
+    const agentReward = await rewardModel.findOne({ agentId: agentId });
+    const admin = await userModel.findById(adminId);
+    if (!admin) return res.status(404).json({ message: "not found" });
+    if (admin.role !== "admin")
+      res.status(400).json({ message: "you are not admin" });
+    if (admin) {
+      
+    }
   } catch (err) {
     console.error(err);
   }
 };
-export const seeAllPendingOrders = async (req: Request, res: Response) => {
-  const { adminId } = req.params;
-  const {} = req.body;
-  try {
-  } catch (err) {
-    console.error(err);
-  }
-};
+// export const seeAllPendingOrders = async (req: Request, res: Response) => {
+//   const { adminId } = req.params;
+//   const {} = req.body;
+//   try {
+//   } catch (err) {
+//     console.error(err);
+//   }
+// };
