@@ -26,7 +26,6 @@ app.use("/admin", adminRoute);
 app.get("/", (_, res) => {
   res.json({ status: "ok" });
 });
-
 // Routes
 // app.use("/api/users", userRoutes);
 app.use("/api/cargo", cargoRoutes);

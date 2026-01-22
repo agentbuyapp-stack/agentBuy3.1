@@ -24,7 +24,8 @@ export interface IOrderItem {
 export interface IAgentOrder {
   userId: mongoose.Types.ObjectId;
   agentId?: mongoose.Types.ObjectId;
-  items: Types.DocumentArray<IOrderItem>;
+  agentItems: Types.DocumentArray<IOrderItem>;
+  userItems: mongoose.Types.ObjectId;
   totalAmount: number;
   status: OrderStatus;
   phone?: string;
@@ -99,13 +100,21 @@ const AgentOrderSchema = new Schema<IAgentOrder>(
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
+      unique: true,
     },
     agentId: {
       type: Schema.Types.ObjectId,
       ref: "User",
       unique: true,
+      // required: true,
     },
-    items: {
+    userItems: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      unique: true,
+      ref: "UserOrder",
+    },
+    agentItems: {
       type: [OrderItemSchema],
       required: true,
     },

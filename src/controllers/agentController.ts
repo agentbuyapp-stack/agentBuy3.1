@@ -2,19 +2,21 @@ import { Request, Response } from "express";
 import { userModel } from "../models/userModel";
 import { rewardModel } from "../models/rewardModel";
 export const rewardRequest = async (req: Request, res: Response) => {
-  const { agentReward, email } = req.body;
+  const { agentReward } = req.body;
+  const { id } = req.params;
   try {
-    const agent = await userModel.findOne({ email: email });
+    const agent = await userModel.findById(id);
+    const reward = await rewardModel.findOne({ agentId: id });
     if (!agent) return res.status(404).json({ message: "AGENT  OLDODGUEE" });
-    if (agent.role === "agent")
+    if (agent.role !== "agent")
       return res
         .status(400)
         .json({ message: "CHI AGENT BISH BAINA DAVRAARAI" });
-    if (agent.agentReward === undefined || agent.agentReward < 50000)
+    if (reward?.reward === undefined || reward?.reward < 50000)
       return res.json({ message: "BAGA BAINA MONGO CHIN" });
-    if (agent.agentReward > 50000) {
+    if (reward?.reward > 50000) {
       await rewardModel.create({
-        agentId: agent._id,     
+        agentId: agent._id,
         pendingReward: agentReward,
         rewardStatus: "pending",
       });

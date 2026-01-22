@@ -110,8 +110,8 @@ export const addItemToOrder = async (req: Request, res: Response) => {
     if (!order) {
       return res.status(404).json({ success: false, error: "Order not found" });
     }
-    order.items.push(req.body);
-    order.totalAmount = order.items.reduce(
+    order.agentItems.push(req.body);
+    order.totalAmount = order.agentItems.reduce(
       (sum, item) => sum + item.price * item.quantity,
       0,
     );
@@ -130,12 +130,12 @@ export const updateOrderItem = async (req: Request, res: Response) => {
     if (!order) {
       return res.status(404).json({ success: false, error: "Order not found" });
     }
-    const item = order.items.id(itemId);
+    const item = order.agentItems.id(itemId);
     if (!item) {
       return res.status(404).json({ success: false, error: "Item not found" });
     }
     Object.assign(item, req.body);
-    order.totalAmount = order.items.reduce(
+    order.totalAmount = order.agentItems.reduce(
       (sum, item) => sum + item.price * item.quantity,
       0,
     );
@@ -154,8 +154,8 @@ export const removeItemFromOrder = async (req: Request, res: Response) => {
     if (!order) {
       return res.status(404).json({ success: false, error: "Order not found" });
     }
-    order.items.pull(itemId);
-    order.totalAmount = order.items.reduce(
+    order.agentItems.pull(itemId);
+    order.totalAmount = order.agentItems.reduce(
       (sum, item) => sum + item.price * item.quantity,
       0,
     );
@@ -174,7 +174,7 @@ export const verifyUserPayment = async (req: Request, res: Response) => {
     if (!order) {
       return res.status(404).json({ success: false, error: "Order not found" });
     }
-    const item = order.items.id(itemId);
+    const item = order.agentItems.id(itemId);
     if (!item) {
       return res.status(404).json({ success: false, error: "Item not found" });
     }
@@ -194,7 +194,7 @@ export const markAgentPaymentPaid = async (req: Request, res: Response) => {
     if (!order) {
       return res.status(404).json({ success: false, error: "Order not found" });
     }
-    const item = order.items.id(itemId);
+    const item = order.agentItems.id(itemId);
     if (!item) {
       return res.status(404).json({ success: false, error: "Item not found" });
     }
@@ -215,7 +215,7 @@ export const addTrackCode = async (req: Request, res: Response) => {
     if (!order) {
       return res.status(404).json({ success: false, error: "Order not found" });
     }
-    const item = order.items.id(itemId);
+    const item = order.agentItems.id(itemId);
     if (!item) {
       return res.status(404).json({ success: false, error: "Item not found" });
     }
