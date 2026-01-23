@@ -10,22 +10,23 @@ export const signUpUser = async (req: Request, res: Response) => {
       const exists = await userModel.findOne({
         clerkId: userData.id,
       });
-      const signupType = userData.unsafe_metadata?.signupType;
+      if (exists)
+        return res.status(400).json({ message: "USER ALREADY EXISTS" });
       if (!exists) {
-        await userModel.create({
+        console.log("USERDATA:", userData);
+        const signupType = userData.unsafe_metadata?.signupType;
+        const newUser = await userModel.create({
           clerkId: userData.id,
           email: userData.email_addresses?.[0]?.email_address,
           role: signupType,
         });
-        console.log("User created in database");
+        console.log("NEW USER:", newUser);
         console.log("ROLE:", signupType);
-      } else {
-        console.log("User already exists in database");
+        res.status(200).json({ USER_CREATED: newUser });
       }
     }
-    res.status(200).send("webhook received");
   } catch (err) {
-    console.error("Webhook error:", err);
-    res.status(400).send("Webhook verification failed");
+    console.error("WEBHOOK ERROR:", err);
+    res.status(400).send("INTERNAL SERVER ERROR");
   }
 };
