@@ -9,6 +9,7 @@ import userRoute from "./routes/userRoute";
 import userOrderRoutes from "./routes/userOrderRoutes";
 import agentOrderRoutes from "./routes/agentOrderRoutes";
 import adminRoute from "./routes/adminRoutes";
+import chatRoute from "./routes/chatRoutes";
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use("/profile", profileRoute);
 // user route
 app.use("/user", userRoute);
 app.use("/admin", adminRoute);
+app.use("/chat", chatRoute);
 app.get("/", (_, res) => {
   res.json({ status: "ok" });
 });

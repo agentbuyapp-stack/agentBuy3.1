@@ -1,37 +1,28 @@
 import mongoose, { Schema, Document } from "mongoose";
 export type Role = "user" | "agent";
 export interface IChat extends Document {
-  //   orderId: mongoose.Types.ObjectId; //order holboh
-  senderId: mongoose.Types.ObjectId; // user esvel agent holboh
-  recieverId: mongoose.Types.ObjectId;
-  senderRole: Role;
-  recieverRole: Role;
-  message: string;
-  isRead: boolean;
+  members: mongoose.Types.ObjectId;
+  message: mongoose.Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
 }
 const chatSchema = new Schema<IChat>(
   {
-    // orderId: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: "",
-    //   required: true,
-    //   unique: true,
-    // },
-    senderId: {
+    members: [
+      {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "User",
+      },
+    ],
+    message: {
       type: Schema.Types.ObjectId,
-      ref: "users",
-      required: true,
-      unique: true,
+      ref: "Messages",
     },
-    senderRole: { type: String, enum: ["user", "agent"] },
-    message: { type: String },
-    isRead: { type: Boolean, default: false },
   },
   {
     timestamps: true,
     collection: "chat",
   },
 );
-export const chatModel = mongoose.model<IChat>("chat", chatSchema);
+export const chatModel = mongoose.model<IChat>("ChatRoom", chatSchema);
