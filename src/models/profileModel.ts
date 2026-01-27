@@ -14,7 +14,7 @@ const ProfileSchema = new Schema<IProfile>(
   {
     userId: {
       type: Schema.Types.ObjectId,
-      ref: "users",
+      ref: "User",
       required: true,
       unique: true,
     },
@@ -46,7 +46,7 @@ const ProfileSchema = new Schema<IProfile>(
   {
     timestamps: true,
     collection: "profiles",
-  }
+  },
 );
 
 export const profileModel = mongoose.model<IProfile>("profiles", ProfileSchema);
