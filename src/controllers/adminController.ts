@@ -133,3 +133,31 @@ export const seeOpenOrderById = async (req: Request, res: Response) => {
     res.status(500).json("INTERNAL SERVER ERROR");
   }
 };
+export const addAdmin = async (req: Request, res: Response) => {
+  const { adminId } = req.params;
+  const { email } = req.body;
+  try {
+    const admin = await userModel.findById(adminId);
+    if (!admin) return res.status(404).json({ message: "ADMIN NOT FOUND" });
+    if (admin.role !== "admin")
+      return res.status(400).json({ message: "YOU ARE NOT THE ADMIN" });
+    if (admin) {
+      const checkEmail = await userModel.findOne({ email: email });
+      if (checkEmail)
+        return res.status(400).json({ message: "ALREADY EXISTS" });
+      if (!checkEmail) {
+        const newAgent = await userModel.create({
+          email: email,
+          role: "agent",
+          isApproved: true,
+          approvedAt: Date.now(),
+          approvedBy: "admin",
+        });
+        res.status(200).json({ AGENT_ADDED: newAgent });
+      }
+    }
+  } catch (err) {
+    console.error("SERVER ERROR:", err);
+    res.status(500).json("INTERNAL SERVER ERROR");
+  }
+};

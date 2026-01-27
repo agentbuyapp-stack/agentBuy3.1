@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { userModel } from "../models/userModel";
 import { messageModel } from "../models/messageModel";
 import { chatModel } from "../models/chatModel";
+import { profileModel } from "../models/profileModel";
+import { io } from "../server";
 
 export const getOrCreateChat = async (req: Request, res: Response) => {
   const { members } = req.body;
@@ -46,6 +48,13 @@ export const sendMessage = async (req: Request, res: Response) => {
         message: message._id,
       },
     });
+    io.to(chatId).emit("newMessage", {
+      _id: message._id,
+      chat: chatId,
+      senderId,
+      text,
+      createdAt: message.createdAt,
+    });
     return res.status(200).json({ message: message });
   } catch (err) {
     console.error("SERVER ERROR:", err);
@@ -60,9 +69,21 @@ export const getAllMessages = async (req: Request, res: Response) => {
     const chat = await messageModel
       .find({ chat: chatId })
       .populate("senderId", "email")
-      .sort({ createdAt: 1 });
+      .sort({ createdAt: 1 })
+      .lean();
+    const senderIds = chat.map((m) => m.senderId._id);
+    const profile = await profileModel
+      .find({ userId: { $in: senderIds } })
+      .select("userId name");
+    const profileNames = new Map(
+      profile.map((p) => [p.userId.toString(), p.name]),
+    );
+    const names = chat.map((m) => ({
+      ...m,
+      senderName: profileNames.get(m.senderId._id.toString()),
+    }));
     if (!chat) return res.status(404).json("CHAT NOT FOUND");
-    if (chat) return res.status(200).json({ CHAT: chat });
+    if (chat) return res.status(200).json({ CHAT: names });
   } catch (err) {
     console.error(err);
   }
