@@ -134,7 +134,7 @@ export const seeOpenOrderById = async (req: Request, res: Response) => {
   }
 };
 export const addAdmin = async (req: Request, res: Response) => {
-  const { adminId } = req.params;
+  const adminId = req.headers.userId;
   const { email } = req.body;
   try {
     const admin = await userModel.findById(adminId);
