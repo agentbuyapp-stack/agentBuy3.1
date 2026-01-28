@@ -58,7 +58,7 @@ const UserOrderSchema = new Schema<IUserOrder>(
     },
     quantity: {
       type: Number,
-      required: true,
+      // required: true,
       min: 1,
       default: 1,
     },

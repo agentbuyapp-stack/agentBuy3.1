@@ -10,10 +10,16 @@ import userOrderRoutes from "./routes/userOrderRoutes";
 import agentOrderRoutes from "./routes/agentOrderRoutes";
 import adminRoute from "./routes/adminRoutes";
 import chatRoute from "./routes/chatRoutes";
+import { adminMiddleware } from "./middleware/adminMiddleware";
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  }),
+);
 // webhook route
 app.use("/api/webhooks", webhookRoute);
 
