@@ -1,14 +1,14 @@
 import { Router } from "express";
 import {
-    createUserOrder,
-    getAllUserOrders,
-    getUserOrdersByUserId,
-    getUserOrderById,
-    updateUserOrder,
-    updateUserOrderStatus,
-    assignAgentToOrder,
-    deleteUserOrder,
-    getUserOrdersByStatus,
+  createUserOrder,
+  getAllUserOrders,
+  getUserOrdersByUserId,
+  getUserOrderById,
+  updateUserOrder,
+  updateUserOrderStatus,
+  assignAgentToOrder,
+  deleteUserOrder,
+  getUserOrdersByStatus,
 } from "../controllers/userOrderController";
 
 const router = Router();
@@ -23,7 +23,7 @@ router.get("/", getAllUserOrders);
 router.get("/status/:status", getUserOrdersByStatus);
 
 // Get user orders by userId
-router.get("/user/:userId", getUserOrdersByUserId);
+router.get("/user/:clerkId", getUserOrdersByUserId);
 
 // Get single order by ID
 router.get("/:id", getUserOrderById);
