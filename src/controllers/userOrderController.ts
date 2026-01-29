@@ -142,7 +142,7 @@ export const deleteUserOrder = async (req: Request, res: Response) => {
 export const getUserOrdersByStatus = async (req: Request, res: Response) => {
   try {
     const { status } = req.params;
-    const orders = await UserOrder.find({ status })
+    const orders = await UserOrder.find({ status: status })
       .populate("userId", "email")
       .populate("agentId", "email")
       .sort({ createdAt: -1 });
