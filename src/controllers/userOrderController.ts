@@ -38,12 +38,17 @@ export const getAllUserOrders = async (req: Request, res: Response) => {
 // Get user orders by userId
 export const getUserOrdersByUserId = async (req: Request, res: Response) => {
   try {
-    const { userId } = req.params;
-    const orders = await UserOrder.find({ userId })
+    const { clerkId } = req.params;
+    if (!clerkId) return res.status(404).json("CLERKID NOT FOUND");
+    const user = await userModel.findOne({ clerkId: clerkId });
+    if (!user) return res.status(404).json("USER NOT FOUND");
+    const orders = await UserOrder.find({ userId: user?._id })
       .populate("agentId", "email")
       .sort({ createdAt: -1 });
+    if (!orders) return res.status(404).json("ORDERS IS NOT FOUND");
     res.status(200).json({ success: true, data: orders });
   } catch (error) {
+    console.error("SERVER ERROR:", error);
     res.status(500).json({ success: false, error: (error as Error).message });
   }
 };
