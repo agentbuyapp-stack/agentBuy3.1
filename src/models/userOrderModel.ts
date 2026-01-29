@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 export type UserOrderStatus =
-  | "Нийтэлсэн"
+  | "published"
   | "Агент судлаж байна"
   | "Төлбөр"
   | "Баталгаажуулсан";
@@ -72,8 +72,8 @@ const UserOrderSchema = new Schema<IUserOrder>(
     },
     status: {
       type: String,
-      enum: ["Нийтэлсэн", "Агент судлаж байна", "Төлбөр", "Баталгаажуулсан"],
-      default: "Нийтэлсэн",
+      enum: ["published", "Агент судлаж байна", "Төлбөр", "Баталгаажуулсан"],
+      default: "published",
     },
     phone: {
       type: String,
