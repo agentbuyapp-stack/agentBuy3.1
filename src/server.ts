@@ -37,10 +37,10 @@ async function start() {
   server.listen(PORT, () => {
     console.log(`Backend running on http://localhost:${PORT}`);
   });
-  const listener = await ngrok.connect({
-    addr: PORT,
-    authtoken: process.env.NGROK_AUTHTOKEN,
-  });
-  console.log("ngrok url:", listener.url());
+  // const listener = await ngrok.connect({
+  //   addr: PORT,
+  //   authtoken: process.env.NGROK_AUTHTOKEN,
+  // });
+  // console.log("ngrok url:", listener.url());
 }
 start();
